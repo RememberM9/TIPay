@@ -21,5 +21,6 @@ E-Wallet_App/
 ├── utils/                # Helper functions (e.g., validators, formatters)
 │   └── helpers.py
 ├── README.md             # Project overview
-└── requirements.txt      # Dependencies
+├── requirements.txt      # Dependencies
+└── LICENSE               # LICENSE
 ```
