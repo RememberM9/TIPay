@@ -20,7 +20,7 @@ E-Wallet_App/
 │   └── db_manager.py
 ├── utils/                # Helper functions (e.g., validators, formatters)
 │   └── helpers.py
-├── README.md             # Project overview
-├── requirements.txt      # Dependencies
+├── README.md             # Project outline
+├── ISO2.txt              # Project proposal
 └── LICENSE               # LICENSE
 ```
