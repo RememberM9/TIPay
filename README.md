@@ -1,6 +1,6 @@
 #### CPE 009C-ECE21S1 (SY: 2025-2026)
 
-# 🪙 **E-Wallet App** *by Group 6*
+# 🪙 **TIPay** *by Group 6*
 
 A Python-based E-wallet application with a simple GUI, CRUD operations, and SQLite integration. Designed for educational use and basic financial simulation.
 
