@@ -12,9 +12,6 @@
 
   II. CRUD Features:
       Users can create, read, update, and delete their accounts and transactions.
-      Enables shared wallets for orgs, departments, or student groups.
-      Allows multiple users to view and manage the same wallet.
-      Supports role-based permissions (e.g., only staff can approve withdrawals).
 
   III. Database:
       We'll use SQLite to save user info, balances, and payment history.
