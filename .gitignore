@@ -4,3 +4,6 @@
 # Ignore Windows folder settings files
 .tmp.drivedownload
 .tmp.driveupload
+
+desktop.ini
+**/desktop.ini
