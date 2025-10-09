@@ -1,0 +1,8 @@
+# NOTE: Only edit the ***.py files.
+# We can ignore the other files around here.
+
+.gitignore
+
+# Ignore Windows folder settings files
+desktop.ini
+**/desktop.ini
