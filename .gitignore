@@ -2,5 +2,5 @@
 # We can ignore the other files around here.
 
 # Ignore Windows folder settings files
-desktop.ini
-**/desktop.ini
+.tmp.drivedownload
+.tmp.driveupload
