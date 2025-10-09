@@ -7,23 +7,22 @@
 💡 What will be your solution?
   We will build a Python app that works like a digital wallet for TIP users. It will include:
 
-  OOP (Object-Oriented Programming):
+  I. OOP (Object-Oriented Programming):
     We'll create classes for User, Wallet, and Transaction. Each user will have a role(student, teacher, staff, or organization) with   different access.
 
-  CRUD Features:
-  Users can create, read, update, and delete their accounts and transactions.
-  Enables shared wallets for orgs, departments, or student groups.
-  Allows multiple users to view and manage the same wallet.
-  Supports role-based permissions (e.g., only staff can approve withdrawals).
+  II. CRUD Features:
+      Users can create, read, update, and delete their accounts and transactions.
+      Enables shared wallets for orgs, departments, or student groups.
+      Allows multiple users to view and manage the same wallet.
+      Supports role-based permissions (e.g., only staff can approve withdrawals).
 
-Database:
-  We'll use SQLite to save user info, balances, and payment history.
-  Obfuscation of data will be implemented for low-level security.
+  III. Database:
+      We'll use SQLite to save user info, balances, and payment history.
+      Obfuscation of data will be implemented for low-level security.
 
-GUI (Graphical User Interface):
-  We’ll use Tkinter to make a simple and easy-to-use interface. It will include:
-    * Login and sign-up screen
-    * Wallet balance and transaction history
-    * Buttons for deposit, withdraw, and transfer
-    * Admin panel for staff to approve or check payments
-
+  IV. GUI (Graphical User Interface):
+      We’ll use Tkinter to make a simple and easy-to-use interface. It will include:
+      * Login and sign-up screen
+      * Wallet balance and transaction history
+      * Buttons for deposit, withdraw, and transfer
+      * Admin panel for staff to approve or check payments
