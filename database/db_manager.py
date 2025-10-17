@@ -21,7 +21,7 @@ def generate_sql_table(name, schema):
         if key != "id":
             columns.append(f"{key} {sql_type}")
         else:
-            id = f"{key} {sql_type} PRIMARY KEY"
+            id = f"{key} {sql_type} PRIMARY KEY AUTOINCREMENT"
     columns = ",\n  ".join([id] + columns)
     return f"CREATE TABLE IF NOT EXISTS {name} (\n  {columns}\n)"
 
