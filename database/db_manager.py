@@ -1,27 +1,33 @@
 # Ramilo
-from sqlite3 import connect
+import sqlite3 as sql
 
 db_file_path = "./database/data.db"
 
 
-def generate_sql_table(name, schema):
+# Generate SQL table creation command from a JSON-like schema
+def generate_sql_table(name, schema: dict) -> str:
     json_to_sql_typemap = {
         "str": "TEXT",  # e.g. "name": "Rem"
         "float": "REAL",  # e.g. "score": 98.6
         "int": "INTEGER",  # e.g. "id": 123
         "bool": "NUMERIC",  # e.g. "is_active": true → stored as 0 or 1
         "None": "NULL",  # e.g. "deleted_at": null
-        "dict": "TEXT",  # e.g. "profile": {...} → serialized as JSON string
-        "list": "TEXT",  # e.g. "tags": ["modular", "overlay"] → serialized as JSON string
+        # "dict": "TEXT",  # e.g. "profile": {...} → serialized as JSON string
+        # "list": "TEXT",  # e.g. "tags": ["modular", "overlay"] → serialized as JSON string
     }
     columns = []
     id = ""
+    if "id" not in schema or type(schema["id"]) is not int:
+        schema["id"] = 0
+        print("Warning: 'id' field missing or not int in schema. Added default 'id' as int.")
+
     for key, value in schema.items():
         sql_type = json_to_sql_typemap[type(value).__name__]
         if key != "id":
             columns.append(f"{key} {sql_type}")
         else:
             id = f"{key} {sql_type} PRIMARY KEY AUTOINCREMENT"
+
     columns = ",\n  ".join([id] + columns)
     return f"CREATE TABLE IF NOT EXISTS {name} (\n  {columns}\n)"
 
@@ -29,14 +35,9 @@ def generate_sql_table(name, schema):
 class Database:
     def __init__(self, name: str, template: dict):
         self.__name = name
-        conn = self.__conn = connect(db_file_path)
         self.__validKeys = tuple(template.keys())
-
-        def commit(c):
-            conn.commit()
-            c.close()
-
-        self.__commit = commit
+        conn = self.__conn = sql.connect(db_file_path)
+        commit = self.__commit = lambda c: conn.commit() or c.close()
         cursor = conn.cursor()
         cursor.execute(generate_sql_table(name, template))
         commit(cursor)
@@ -53,14 +54,14 @@ class Database:
 
     def has(self, id: int):
         cursor = self.__conn.cursor()
-        cursor.execute(f"SELECT 1 FROM {self.__name} WHERE id = ? LIMIT 1", (id,))
+        cursor.execute(f"SELECT 1 FROM {self.__name} WHERE id = {id} LIMIT 1")
         exists = cursor.fetchone() is not None
         cursor.close()
         return exists
 
     def get(self, id: int):
         cursor = self.__conn.cursor()
-        cursor.execute(f"SELECT * FROM {self.__name} WHERE id = ?", (id,))
+        cursor.execute(f"SELECT * FROM {self.__name} WHERE id = {id}")
         row = cursor.fetchone()
         cursor.close()
         if row is None:
@@ -73,6 +74,9 @@ class Database:
         for k in data.keys():
             if k in self.__validKeys:
                 filteredData[k] = data[k]
+            else :
+                print(f"Warning: Key '{k}' not in valid keys for table '{self.__name}'. Ignored.")
+
         cursor = self.__conn.cursor()
         sql_code = f"""
             INSERT OR REPLACE INTO {self.__name} ({",".join(filteredData.keys())})
@@ -83,7 +87,7 @@ class Database:
 
     def delete(self, id: int):
         cursor = self.__conn.cursor()
-        cursor.execute(f"DELETE FROM {self.__name} WHERE id = ?", (id,))
+        cursor.execute(f"DELETE FROM {self.__name} WHERE id = {id}")
         self.__commit(cursor)
 
     # empty the table items
@@ -99,7 +103,7 @@ class Database:
 # complete removal of a table in sql
 def DROP(dbName: str):
 
-    conn = connect(db_file_path)
+    conn = sql.connect(db_file_path)
     cursor = conn.cursor()
     cursor.execute(f"DROP TABLE IF EXISTS {dbName}")
     conn.commit()
